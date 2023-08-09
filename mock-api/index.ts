@@ -40,13 +40,17 @@ app.get('/clients', (req: Request, res: Response) => {
     if (clients.length === 0) {
         res.status(404).send({
             message: 'No clients found',
-            clients: clients,
+            data: {
+                clients: clients
+            }
         });
     }
 
     res.status(200).send({
         message: 'Successfully found clients',
-        clients: clients,
+        data: {
+            clients: clients
+        }
     })
 });
 
@@ -57,7 +61,9 @@ app.post('/clients', (req: Request, res: Response) => {
 
     res.status(201).send({
         message: 'Successfully created client',
-        client: client,
+        data: {
+            client: client,
+        }
     });
 });
 
@@ -68,7 +74,9 @@ app.put('/clients/:id', (req: Request, res: Response) => {
         updateClient(client);
         res.status(204).send({
             message: 'Successfully updated client',
-            client: client,
+            data: {
+                client: client,
+            }
         });
     } catch (error: any) {
         res.status(404).send({
@@ -83,7 +91,7 @@ app.delete('/clients/:id', (req: Request, res: Response) => {
         const {id} = req.params;
         removeClient(id);
         res.status(204).send({
-            message: 'Successfully deleted client',
+            message: 'Successfully deleted client'
         });
     } catch (error: any) {
         res.status(404).send({

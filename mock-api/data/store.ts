@@ -37,6 +37,7 @@ export const listClients = (pagination: IPagination) => {
 
     const start = (pageNumber - 1) * pageSize;
     const end = start + pageSize;
+    console.log(`start=${start}, end=${end}`)
     const paginatedList = list.slice(start, end);
 
     return paginatedList.sort((a, b) => {

@@ -1,14 +1,15 @@
 # Running instructions
 
 - In new terminal - Go to <em>/mock-api/</em> (starts up the mock api)
-  - `npm install`
-  - `npm run build`
-  - `npm start`
+    - `npm install`
+    - `npm run build`
+    - `npm start`
 - In new terminal - Go to <em>/ui/</em> (starts up the UI)
-  - `npm install`
-  - `npm start`
+    - `npm install`
+    - `npm start`
 
 # Requirements
+
 1. Create a client
     - All fields are required
 2. Search for a client
