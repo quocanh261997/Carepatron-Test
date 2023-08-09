@@ -24,12 +24,15 @@ export const updateClient = (client: IClient) => {
 };
 
 export const removeClient = (id: string) => {
+    if (!store.entities[id]) {
+        throw new Error(`No client with the given id=${id} found`);
+    }
     delete store.entities[id];
 };
 
 export const listClients = (pagination: IPagination) => {
     // Update this to use pagination
-    const {pageNumber, pageSize = 5} = pagination;
+    const {pageNumber, pageSize} = pagination;
     const list = Object.keys(store.entities).map((id) => store.entities[id]);
 
     const start = (pageNumber - 1) * pageSize;

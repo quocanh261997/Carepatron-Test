@@ -27,7 +27,10 @@ app.get('/', (req: Request, res: Response) => {
 
 // get clients
 app.get('/clients', (req: Request, res: Response) => {
-    const {page, pageSize} = req.query;
+    const {
+        page = "0",
+        pageSize = "5"
+    } = req.query;
     const clients = listClients({
         pageNumber: parseInt(page as string, 10),
         pageSize: parseInt(pageSize as string, 10),
@@ -60,12 +63,27 @@ app.post('/clients', (req: Request, res: Response) => {
 
 // update client
 app.put('/clients/:id', (req: Request, res: Response) => {
-    const client: IClient = req.body;
     try {
+        const client: IClient = req.body;
         updateClient(client);
         res.status(204).send({
             message: 'Successfully updated client',
             client: client,
+        });
+    } catch (error: any) {
+        res.status(404).send({
+            message: error.message,
+        });
+    }
+});
+
+// delete client
+app.delete('/clients/:id', (req: Request, res: Response) => {
+    try {
+        const {id} = req.params;
+        removeClient(id);
+        res.status(204).send({
+            message: 'Successfully deleted client',
         });
     } catch (error: any) {
         res.status(404).send({
