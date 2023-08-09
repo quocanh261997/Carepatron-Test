@@ -30,7 +30,7 @@ export const removeClient = (id: string) => {
     delete store.entities[id];
 };
 
-export const listClients = (pagination: IPagination) => {
+export const listClients = (pagination: IPagination, search: string) => {
     // Update this to use pagination
     const {pageNumber, pageSize} = pagination;
     const list = Object.keys(store.entities).map((id) => store.entities[id]);
@@ -38,7 +38,12 @@ export const listClients = (pagination: IPagination) => {
     const start = (pageNumber - 1) * pageSize;
     const end = start + pageSize;
     console.log(`start=${start}, end=${end}`)
-    const paginatedList = list.slice(start, end);
+
+    const paginatedList = list.slice(start, end).filter((client) => {
+        return client.firstName.toLowerCase().includes(search.toLowerCase())
+            || client.lastName.toLowerCase().includes(search.toLowerCase())
+            || client.email.toLowerCase().includes(search.toLowerCase());
+    });
 
     return paginatedList.sort((a, b) => {
         if (a.firstName < b.firstName) {

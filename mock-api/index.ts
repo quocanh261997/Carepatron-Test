@@ -29,14 +29,14 @@ app.get('/', (req: Request, res: Response) => {
 app.get('/clients', (req: Request, res: Response) => {
     const {
         page = "0",
-        pageSize = "5"
+        pageSize = "5",
+        search = "",
     } = req.query;
     const clients = listClients({
         pageNumber: parseInt(page as string, 10),
         pageSize: parseInt(pageSize as string, 10),
-    });
-    // Since the store always got 1 record, if the returned clients array is empty, then it means the pagination
-    // param is not correct (wrong page number).
+    }, search as string);
+
     if (clients.length === 0) {
         res.status(404).send({
             message: 'No clients found',
