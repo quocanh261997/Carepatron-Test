@@ -6,6 +6,8 @@ import Clients from './pages/Clients';
 import {ThemeProvider, createTheme} from '@mui/material';
 import ResponsiveAppBar from './components/Navigation';
 
+import './i18n/config';
+
 const theme = createTheme({
     components: {
         // Name of the component
@@ -57,6 +59,7 @@ const theme = createTheme({
         }
     },
 });
+
 
 export default function App() {
     return (

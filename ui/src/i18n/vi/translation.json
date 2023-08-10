@@ -1,0 +1,28 @@
+{
+    "navigationBar":{
+        "clients": "Khách hàng"
+    },
+	"clients": {
+		"pageTitle": "Khách hàng",
+		"createBtn": "Thêm khách hàng mới",
+		"searchPlaceholder": "Tìm kiếm...",
+		"table": {
+			"name": "Họ và Tên",
+			"phone": "Số điện thoại",
+			"email": "Email",
+			"noClient": "Không có kết quả nào"
+		},
+		"createModal": {
+            "title": "Thêm khách hàng mới",
+			"personal": "Thông tin cá nhân",
+			"contact": "Thông tin liên hệ",
+			"firstName": "Họ",
+			"lastName": "Tên",
+			"email": "Email",
+			"phoneNumber": "Số điện thoại",
+			"back": "Trở lại",
+			"continue": "Tiếp tục",
+			"create": "Thêm khách hàng"
+		}
+	}
+}

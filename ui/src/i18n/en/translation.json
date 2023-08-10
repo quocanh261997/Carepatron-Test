@@ -1,0 +1,27 @@
+{
+    "navigationBar":{
+        "clients": "Clients"
+    },
+	"clients": {
+		"pageTitle": "Clients",
+		"createBtn": "Create new client",
+		"searchPlaceholder": "Search clients...",
+		"table": {
+			"name": "Name",
+			"phone": "Phone",
+			"email": "Email"
+		},
+		"createModal": {
+			"title": "Create new client",
+			"personal": "Personal information",
+			"contact": "Contact information",
+			"firstName": "First name",
+			"lastName": "Last name",
+			"email": "Email",
+			"phoneNumber": "Phone number",
+			"back": "Back",
+			"continue": "Continue",
+			"create": "Create client"
+		}
+	}
+}
