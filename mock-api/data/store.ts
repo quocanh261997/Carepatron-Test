@@ -37,7 +37,6 @@ export const listClients = (pagination: IPagination, search: string) => {
 
     const start = (pageNumber - 1) * pageSize;
     const end = start + pageSize;
-    console.log(`start=${start}, end=${end}`)
 
     const paginatedList = list.slice(start, end).filter((client) => {
         return client.firstName.toLowerCase().includes(search.toLowerCase())
@@ -45,7 +44,7 @@ export const listClients = (pagination: IPagination, search: string) => {
             || client.email.toLowerCase().includes(search.toLowerCase());
     });
 
-    return paginatedList.sort((a, b) => {
+    const sortedList = paginatedList.sort((a, b) => {
         if (a.firstName < b.firstName) {
             return -1;
         }
@@ -54,4 +53,13 @@ export const listClients = (pagination: IPagination, search: string) => {
         }
         return 0;
     });
+
+    return {
+        clients: sortedList,
+        meta: {
+            pageNumber: pageNumber,
+            pageSize: pageSize,
+            total: list.length,
+        }
+    }
 };

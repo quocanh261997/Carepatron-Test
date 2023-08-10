@@ -8,6 +8,7 @@ interface IClient {
 
 interface IApplicationState {
     clients: IClient[];
+    totalClients: number;
 }
 
 interface IRESTResponse {
@@ -15,5 +16,10 @@ interface IRESTResponse {
     data?: {
         client?: IClient;
         clients?: IClient[];
+        meta?: {
+            pageNumber: number;
+            pageSize: number;
+            total: number;
+        }
     }
 }

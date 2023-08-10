@@ -1,17 +1,21 @@
 import apiClient from './apiClient';
 
-export const getClients = ({ page, pageSize }: { page: number; pageSize: number }): Promise<IRESTResponse> => {
-	return apiClient.get<IRESTResponse>(`clients?page=${page}&pageSize=${pageSize}`);
+export const getClients = ({page, pageSize, search}: {
+    page: number;
+    pageSize: number,
+    search?: string
+}): Promise<IRESTResponse> => {
+    return apiClient.get<IRESTResponse>(`clients?page=${page}&pageSize=${pageSize}&search=${search}`);
 };
 
 export const createClient = (client: IClient): Promise<void> => {
-	return apiClient.post<void>('clients', client);
+    return apiClient.post<void>('clients', client);
 };
 
 export const updateClient = (client: IClient): Promise<void> => {
-	return apiClient.put<void>(`clients/${client.id}`, client);
+    return apiClient.put<void>(`clients/${client.id}`, client);
 };
 
 export const deleteClient = (client: IClient): Promise<void> => {
-	return apiClient.delete<void>(`clients/${client.id}`);
+    return apiClient.delete<void>(`clients/${client.id}`);
 };

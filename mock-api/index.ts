@@ -32,7 +32,7 @@ app.get('/clients', (req: Request, res: Response) => {
         pageSize = "5",
         search = "",
     } = req.query;
-    const clients = listClients({
+    const {clients, meta} = listClients({
         pageNumber: parseInt(page as string, 10),
         pageSize: parseInt(pageSize as string, 10),
     }, search as string);
@@ -41,7 +41,8 @@ app.get('/clients', (req: Request, res: Response) => {
         res.status(404).send({
             message: 'No clients found',
             data: {
-                clients: clients
+                clients: clients,
+                meta: meta
             }
         });
     }
@@ -49,7 +50,8 @@ app.get('/clients', (req: Request, res: Response) => {
     res.status(200).send({
         message: 'Successfully found clients',
         data: {
-            clients: clients
+            clients: clients,
+            meta: meta
         }
     })
 });

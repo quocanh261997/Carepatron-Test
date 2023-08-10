@@ -1,18 +1,17 @@
 import {memo, useCallback, useContext, useEffect, useRef, useState} from 'react';
 import {
     Box,
-    Button,
+    Button, createTheme,
     IconButton,
     Modal,
     Step,
-    StepButton,
+    StepButton, StepLabel,
     Stepper,
-    TextField,
-    Typography,
+    TextField, ThemeProvider, Typography,
 } from '@mui/material';
 import {StateContext} from '../../store/DataProvider';
-import {createClient, getClients} from '../../services/api';
-import {ArrowBack, ArrowLeft} from '@mui/icons-material';
+import {createClient} from '../../services/api';
+import {ArrowBack} from '@mui/icons-material';
 import CloseIcon from '@mui/icons-material/Close';
 
 interface Props {
@@ -32,32 +31,73 @@ function CreateModal({isCreateModalShown, onClose}: Props) {
     });
     const submitForm = useCallback(() => {
         createClient(formDataRef.current)
-            .then(fetchClients)
+            .then(() => fetchClients(1))
             .then(onClose)
+            .then(() => setCurrentStep(0))
+            .then(() => resetFormData())
             .catch((error) => {
                 alert(error);
             });
     }, [onClose, fetchClients]);
+
+    const resetFormData = () => {
+        formDataRef.current = {
+            id: '',
+            firstName: '',
+            lastName: '',
+            email: '',
+            phoneNumber: '',
+        };
+    }
+
+    const onCloseModal = () => {
+        resetFormData()
+        setCurrentStep(0);
+        onClose();
+    }
+
+    const inputTheme = createTheme({
+        components: {
+            MuiTextField: {
+                styleOverrides: {
+                    root: {
+                        margin: "5px 0px"
+                    }
+                }
+            },
+
+        },
+        typography: {
+            allVariants: {
+                color: "#8c8e93"
+            }
+        }
+    })
+
     const steps = [
         {
             id: 'personal',
             label: 'Personal details',
             form: (
                 <Box>
+                    <Typography variant='body2'>
+                        First name
+                    </Typography>
                     <TextField
                         key={'firstName'}
                         defaultValue={formDataRef.current.firstName}
-                        label='First name'
                         fullWidth
                         onChange={(event) => {
                             formDataRef.current.firstName = event.target.value;
                         }}
                         InputLabelProps={{shrink: true}}
                     ></TextField>
+                    <Typography variant='body2'>
+                        Last name
+                    </Typography>
                     <TextField
                         key={'lastName'}
                         defaultValue={formDataRef.current.lastName}
-                        label='Last name'
                         fullWidth
                         onChange={(event) => {
                             formDataRef.current.lastName = event.target.value;
@@ -72,20 +112,24 @@ function CreateModal({isCreateModalShown, onClose}: Props) {
             label: 'Contact details',
             form: (
                 <Box>
+                    <Typography variant='body2'>
+                        Email
+                    </Typography>
                     <TextField
                         key={'email'}
                         defaultValue={formDataRef.current.email}
-                        label='Email'
                         fullWidth
                         onChange={(event) => {
                             formDataRef.current.email = event.target.value;
                         }}
                         InputLabelProps={{shrink: true}}
                     ></TextField>
+                    <Typography variant='body2'>
+                        Phone number
+                    </Typography>
                     <TextField
                         key={'phoneNumber'}
                         defaultValue={formDataRef.current.phoneNumber}
-                        label='Phone number'
                         fullWidth
                         onChange={(event) => {
                             formDataRef.current.phoneNumber = event.target.value;
@@ -99,9 +143,10 @@ function CreateModal({isCreateModalShown, onClose}: Props) {
     return (
         <Modal
             open={isCreateModalShown}
-            onClose={onClose}
+            onClose={onCloseModal}
             aria-labelledby='modal-modal-title'
             aria-describedby='modal-modal-description'
+            hideBackdrop={true}
         >
             <Box
                 sx={{
@@ -111,30 +156,43 @@ function CreateModal({isCreateModalShown, onClose}: Props) {
                     transform: 'translate(-50%, -50%)',
                     width: 400,
                     bgcolor: 'background.paper',
-                    border: '2px solid #000',
-                    boxShadow: 24,
+                    borderRadius: 1,
+                    boxShadow: 16,
                     p: 4,
                 }}
             >
-                <IconButton onClick={onClose}>
-                    <CloseIcon/>
-                </IconButton>
-                <Stepper nonLinear activeStep={currentStep}>
+                <Box sx={{display: 'flex', flexWrap: 'wrap', justifyContent: "space-between", mb: 2}}>
+                    <Typography variant='h6' sx={{pt: 0.5}}>
+                        Create new client
+                    </Typography>
+                    <IconButton onClick={onCloseModal}>
+                        <CloseIcon/>
+                    </IconButton>
+                </Box>
+                <Stepper nonLinear activeStep={currentStep} sx={{mb: 3}}>
                     {steps.map((step, stepIndex) => {
                         return (
-                            <Step key={step.id} completed={currentStep > stepIndex}>
-                                <StepButton color='inherit' onClick={() => setCurrentStep((step) => step + 1)}>
+                            <Step key={step.id} completed={currentStep > stepIndex} color='black'>
+                                <StepLabel color='inherit'>
                                     {step.label}
-                                </StepButton>
+                                </StepLabel>
                             </Step>
                         );
                     })}
                 </Stepper>
-                {steps?.[currentStep]?.form}
-                <Box>
+                <ThemeProvider theme={inputTheme}>
+                    {steps?.[currentStep]?.form}
+                </ThemeProvider>
+                <Box sx={{display: 'flex', flexWrap: 'wrap', justifyContent: "space-between", mt: 2}}>
                     {currentStep !== 0 && (
                         <Button
                             variant='text'
+                            sx={{
+                                color: 'seaBlue.main',
+                                "&:hover": {
+                                    backgroundColor: 'transparent'
+                                }
+                            }}
                             onClick={() => setCurrentStep((step) => step - 1)}
                             startIcon={<ArrowBack/>}
                         >
@@ -142,11 +200,11 @@ function CreateModal({isCreateModalShown, onClose}: Props) {
                         </Button>
                     )}
                     {currentStep !== steps.length - 1 ? (
-                        <Button variant='contained' onClick={() => setCurrentStep((step) => step + 1)}>
+                        <Button variant='contained' color='seaBlue' onClick={() => setCurrentStep((step) => step + 1)}>
                             Continue
                         </Button>
                     ) : (
-                        <Button variant='contained' onClick={() => submitForm()}>
+                        <Button variant='contained' color='seaBlue' onClick={() => submitForm()}>
                             Create client
                         </Button>
                     )}
