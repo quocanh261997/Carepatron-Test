@@ -37,16 +37,6 @@ app.get('/clients', (req: Request, res: Response) => {
         pageSize: parseInt(pageSize as string, 10),
     }, search as string);
 
-    if (clients.length === 0) {
-        res.status(404).send({
-            message: 'No clients found',
-            data: {
-                clients: clients,
-                meta: meta
-            }
-        });
-    }
-
     res.status(200).send({
         message: 'Successfully found clients',
         data: {

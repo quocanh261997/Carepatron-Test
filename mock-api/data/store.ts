@@ -7,6 +7,34 @@ export const store: IStore = {
             email: 'john@gmail.com',
             phoneNumber: '+6192099102',
         },
+        'xx-aa-bc': {
+            id: 'xx-aa-bc',
+            firstName: 'AJohn',
+            lastName: 'Smitherin',
+            email: 'john@gmail.com',
+            phoneNumber: '+6192099102',
+        },
+        'xx-aa-bd': {
+            id: 'xx-aa-bd',
+            firstName: 'BJohn',
+            lastName: 'Smitherin',
+            email: 'john@gmail.com',
+            phoneNumber: '+6192099102',
+        },
+        'xx-aa-be': {
+            id: 'xx-aa-be',
+            firstName: 'CJohn',
+            lastName: 'Smitherin',
+            email: 'john@gmail.com',
+            phoneNumber: '+6192099102',
+        },
+        'xx-aa-bf': {
+            id: 'xx-aa-bf',
+            firstName: 'DJohn',
+            lastName: 'Smitherin',
+            email: 'john@gmail.com',
+            phoneNumber: '+6192099102',
+        },
     },
 };
 
@@ -38,11 +66,11 @@ export const listClients = (pagination: IPagination, search: string) => {
     const start = (pageNumber - 1) * pageSize;
     const end = start + pageSize;
 
-    const paginatedList = list.slice(start, end).filter((client) => {
+    const paginatedList = list.filter((client) => {
         return client.firstName.toLowerCase().includes(search.toLowerCase())
             || client.lastName.toLowerCase().includes(search.toLowerCase())
             || client.email.toLowerCase().includes(search.toLowerCase());
-    });
+    }).slice(start, end);
 
     const sortedList = paginatedList.sort((a, b) => {
         if (a.firstName < b.firstName) {
