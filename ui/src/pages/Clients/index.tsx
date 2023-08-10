@@ -43,8 +43,16 @@ function Clients() {
 			<Typography variant='h4' sx={{ textAlign: 'start' }}>
 				{t('clients.pageTitle')}
 			</Typography>
-			<Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', mt: 2 }}>
-				<FormControl sx={{ width: '25ch' }} variant='outlined' hiddenLabel>
+			<Box
+				sx={{
+					display: 'flex',
+					flexDirection: { xs: 'column', sm: 'row' },
+					flexWrap: 'wrap',
+					justifyContent: 'space-between',
+					mt: 2,
+				}}
+			>
+				<FormControl sx={{ width: {sm:'25ch'} }} variant='outlined' hiddenLabel>
 					<OutlinedInput
 						sx={{
 							bgcolor: 'white',
