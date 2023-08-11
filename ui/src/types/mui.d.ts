@@ -27,3 +27,9 @@ declare module "@mui/material/Pagination" {
         seaBlue: true;
     }
 }
+
+declare module "@mui/material/AppBar" {
+    interface AppBarPropsColorOverrides {
+        seaBlue: true;
+    }
+}

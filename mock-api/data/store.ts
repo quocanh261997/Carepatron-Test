@@ -66,13 +66,13 @@ export const listClients = (pagination: IPagination, search: string) => {
     const start = (pageNumber - 1) * pageSize;
     const end = start + pageSize;
 
-    const paginatedList = list.filter((client) => {
+    const filteredList = list.filter((client) => {
         return client.firstName.toLowerCase().includes(search.toLowerCase())
             || client.lastName.toLowerCase().includes(search.toLowerCase())
             || client.email.toLowerCase().includes(search.toLowerCase());
-    }).slice(start, end);
+    })
 
-    const sortedList = paginatedList.sort((a, b) => {
+    const sortedList = filteredList.slice(start, end).sort((a, b) => {
         if (a.firstName < b.firstName) {
             return -1;
         }
@@ -87,7 +87,7 @@ export const listClients = (pagination: IPagination, search: string) => {
         meta: {
             pageNumber: pageNumber,
             pageSize: pageSize,
-            total: list.length,
+            total: filteredList.length,
         }
     }
 };

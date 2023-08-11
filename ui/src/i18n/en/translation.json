@@ -1,27 +1,36 @@
 {
-    "navigationBar":{
-        "clients": "Clients"
+  "navigationBar": {
+    "clients": "Clients"
+  },
+  "clients": {
+    "pageTitle": "Clients",
+    "createBtn": "Create new client",
+    "searchPlaceholder": "Search clients...",
+    "table": {
+      "name": "Name",
+      "phone": "Phone",
+      "email": "Email",
+      "noClient": "No clients found"
     },
-	"clients": {
-		"pageTitle": "Clients",
-		"createBtn": "Create new client",
-		"searchPlaceholder": "Search clients...",
-		"table": {
-			"name": "Name",
-			"phone": "Phone",
-			"email": "Email"
-		},
-		"createModal": {
-			"title": "Create new client",
-			"personal": "Personal information",
-			"contact": "Contact information",
-			"firstName": "First name",
-			"lastName": "Last name",
-			"email": "Email",
-			"phoneNumber": "Phone number",
-			"back": "Back",
-			"continue": "Continue",
-			"create": "Create client"
-		}
-	}
+    "createModal": {
+      "title": "Create new client",
+      "personal": "Personal information",
+      "contact": "Contact information",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email",
+      "phoneNumber": "Phone number",
+      "back": "Back",
+      "continue": "Continue",
+      "create": "Create client",
+      "firstNameError": "First name is invalid",
+      "lastNameError": "Last name is invalid",
+      "emailError": "Email is invalid",
+      "phoneNumberError": "Phone number requires 10 numbers"
+    },
+    "updateModal": {
+      "title": "Update client",
+      "update": "Update client"
+    }
+  }
 }

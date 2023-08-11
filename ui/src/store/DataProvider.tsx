@@ -37,7 +37,6 @@ export default function DataProvider({children}: { children?: React.ReactNode })
     const [state, dispatch] = useReducer(reducer, initialState);
 
     const fetchClients = useCallback(async (page: number, search?: string) => {
-        console.log("Hello")
         const res = await getClients({
             page: page,
             pageSize: 5,

@@ -6,42 +6,42 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import ClientRow from './ClientRow';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 
-export default function BasicTable({ clients }: { clients: IClient[] }) {
-	const { t } = useTranslation();
+export default function BasicTable({clients}: { clients: IClient[] }) {
+    const {t} = useTranslation();
 
-	return (
-		<TableContainer component={Paper} sx={{ maxWidth: '100%' }}>
-			<Table sx={{ minWidth: 400 }} aria-label='simple table'>
-				<TableHead>
-					<TableRow
-						sx={{
-							'& th': {
-								fontWeight: 'bold',
-							},
-						}}
-					>
-						<TableCell>{t('clients.table.name')}</TableCell>
-						<TableCell>{t('clients.table.phone')}</TableCell>
-						<TableCell>{t('clients.table.email')}</TableCell>
-						<TableCell></TableCell>
-					</TableRow>
-				</TableHead>
-				<TableBody>
-					{clients.map((client) => (
-						<ClientRow key={client.id} client={client} />
-					))}
-					{!clients ||
-						(!clients.length && (
-							<TableRow sx={{ padding: 3 }}>
-								<TableCell component='th' scope='row'>
-									{t('clients.table.noClient')}
-								</TableCell>
-							</TableRow>
-						))}
-				</TableBody>
-			</Table>
-		</TableContainer>
-	);
+    return (
+        <TableContainer component={Paper} sx={{maxWidth: '100%'}}>
+            <Table sx={{minWidth: 400}} aria-label='simple table'>
+                <TableHead>
+                    <TableRow
+                        sx={{
+                            '& th': {
+                                fontWeight: 'bold',
+                            },
+                        }}
+                    >
+                        <TableCell>{t('clients.table.name')}</TableCell>
+                        <TableCell>{t('clients.table.phone')}</TableCell>
+                        <TableCell>{t('clients.table.email')}</TableCell>
+                        <TableCell></TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {clients.map((client) => (
+                        <ClientRow key={client.id} client={client}/>
+                    ))}
+                    {!clients ||
+                        (!clients.length && (
+                            <TableRow sx={{padding: 3}}>
+                                <TableCell component='th' scope='row'>
+                                    {t('clients.table.noClient')}
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
+    );
 }
