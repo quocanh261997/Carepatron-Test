@@ -17,7 +17,7 @@ import { createClient, updateClient } from '../../services/api';
 import { ArrowBack } from '@mui/icons-material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useTranslation } from 'react-i18next';
-import { TextFieldWValidation } from '../../components/TextFieldWValidation';
+import { TextFieldWValidation, TextFieldWValidationRef } from '../../components/TextFieldWValidation';
 
 interface Props {
 	isCreateModalShown: boolean;
@@ -133,6 +133,9 @@ function CreateModal({ isCreateModalShown, onClose, client }: Props) {
 	});
 
     const formIsValidRef = useRef<Record<string, boolean>>({})
+    
+    const firstNameFieldRef = useRef<TextFieldWValidationRef>()
+    const lastNameFieldRef = useRef<TextFieldWValidationRef>();
 	const steps = [
 		{
 			id: 'personal',
@@ -146,6 +149,7 @@ function CreateModal({ isCreateModalShown, onClose, client }: Props) {
 							formDataRef.current.firstName = value;
                             formIsValidRef.current.firstName = isValid
 						}}
+                        ref={firstNameFieldRef}
 						validate={(value) => {
 							validateField('firstName', value)
 						}}
@@ -158,6 +162,7 @@ function CreateModal({ isCreateModalShown, onClose, client }: Props) {
 							formDataRef.current.lastName = value;
                             formIsValidRef.current.lastName = isValid;
 						}}
+                        ref={lastNameFieldRef}
 						validate={(value) => {
 							validateField('lastName', value)
 						}}
@@ -262,6 +267,8 @@ function CreateModal({ isCreateModalShown, onClose, client }: Props) {
 							color='seaBlue'
 							onClick={() => {
                                 console.log(formIsValidRef.current)
+                                firstNameFieldRef.current?.validate?.()
+                                lastNameFieldRef.current?.validate?.()
 								if (formIsValidRef.current.firstName && formIsValidRef.current.lastName) {
 									setCurrentStep((step) => step + 1);
 								}

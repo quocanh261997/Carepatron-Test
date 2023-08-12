@@ -1,14 +1,29 @@
 import { TextField, Typography } from '@mui/material';
-import { useState } from 'react';
+import { forwardRef, useImperativeHandle, useState } from 'react';
 
 interface Props {
 	label: string;
 	onChange: (value: string, isValid: boolean) => void;
 	validate: (value: string) => void;
 }
-export function TextFieldWValidation({ label, onChange, validate }: Props) {
+export interface TextFieldWValidationRef {
+    validate: ()=>void
+}
+export const TextFieldWValidation = forwardRef(({ label, onChange, validate }: Props,ref) => {
 	const [error, setError] = useState<string|undefined>();
 	const [value, setValue] = useState('');
+
+    useImperativeHandle(ref, () => ({
+        // start() has type inferrence here
+        validate: ()=>{
+            try {
+                validate(value);
+                setError(undefined)
+            } catch (err) {
+                setError((err as Error)?.toString?.());
+            }
+        }
+      }));
 
     const changeHandler = (event:any) => {
         const _value = event.target.value;
@@ -36,4 +51,4 @@ export function TextFieldWValidation({ label, onChange, validate }: Props) {
 			></TextField>
 		</>
 	);
-}
+})
