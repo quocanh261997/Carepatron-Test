@@ -29,3 +29,13 @@
     - How can we support multiple countries?
 4. How can you ensure the app behaves as you intend it to?
 5. How intuitive is the behavior of the app?
+
+# Notes
+
+1. I added a few extra functionalities of the app itself:
+    * Ability to update/delete a client
+    * Form input validation
+    * Switch country locale (EN/VI)
+2. I installed a few extra packages to help with the development:
+    * react-hook-form (Help with form validation)
+    * react-i18next (Help with localization)
