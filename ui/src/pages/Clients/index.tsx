@@ -2,7 +2,7 @@ import {memo, useContext, useEffect, useRef, useState} from 'react';
 import {
     Box,
     Button,
-    FormControl,
+    IconButton,
     InputAdornment,
     OutlinedInput,
     Pagination,
@@ -14,8 +14,10 @@ import {StateContext} from '../../store/DataProvider';
 import Page from '../../components/Page';
 import ClientTable from './ClientTable';
 import SearchIcon from '@mui/icons-material/Search';
+import ClearIcon from '@mui/icons-material/Clear';
 import CreateModal from './CreateModal';
 import {useTranslation} from 'react-i18next';
+import {Controller, useForm} from "react-hook-form";
 
 function Clients() {
     const {state, fetchClients} = useContext(StateContext);
@@ -25,8 +27,19 @@ function Clients() {
     const {clients, totalClients} = state;
     const pageSize = 5;
 
+    const {
+        handleSubmit,
+        control,
+        reset,
+        formState: {isDirty},
+        getValues,
+    } = useForm({
+        defaultValues: {
+            search: "",
+        }
+    })
+
     useEffect(() => {
-        console.log(page)
         fetchClients(page, searchQuery);
     }, [page, fetchClients, searchQuery]);
 
@@ -36,9 +49,9 @@ function Clients() {
 
     const [isCreateModalShown, setCreateModalShown] = useState(false);
 
-    const searchInputDebounceRef = useRef<number>();
 
     const {t} = useTranslation();
+
     return (
         <Page>
             <Typography variant='h4' sx={{textAlign: 'start'}}>
@@ -53,36 +66,41 @@ function Clients() {
                     mt: 2,
                 }}
             >
-                <FormControl sx={{width: {sm: '25ch'}}} variant='outlined' hiddenLabel>
-                    <OutlinedInput
-                        sx={{
-                            bgcolor: 'white',
-                            height: '40px',
-                            '& .MuiOutlinedInput-notchedOutline': {
-                                borderWidth: '0.5px',
-                            },
-                        }}
-                        id='outlined-adornment-password'
-                        placeholder={t('clients.searchPlaceholder')}
-                        type={'text'}
-                        endAdornment={
-                            <InputAdornment position='end'>
-                                <SearchIcon/>
-                            </InputAdornment>
-                        }
-                        onChange={(e) => {
-                            if (searchInputDebounceRef.current) {
-                                clearTimeout(searchInputDebounceRef.current);
-                            }
-                            const value = e.currentTarget.value;
-                            searchInputDebounceRef.current = window.setTimeout(() => {
-                                setPage(1);
-                                setSearchQuery(value);
-                                searchInputDebounceRef.current = undefined;
-                            }, 500);
-                        }}
+                <form onSubmit={handleSubmit(() => setSearchQuery(getValues('search')))}>
+                    <Controller
+                        name='search'
+                        control={control}
+                        render={({field: {onChange, value}}) => (
+                            <OutlinedInput
+                                sx={{
+                                    bgcolor: 'white',
+                                    height: '40px',
+                                    '& .MuiOutlinedInput-notchedOutline': {
+                                        borderWidth: '0.5px',
+                                    },
+                                }}
+                                id='outlined-adornment-password'
+                                placeholder={t('clients.searchPlaceholder')}
+                                type={'text'}
+                                endAdornment={
+                                    <InputAdornment position='end'>
+                                        <IconButton
+                                            disabled={!isDirty}
+                                            onClick={() => {
+                                                reset({search: ""});
+                                                setSearchQuery("");
+                                            }}
+                                        >
+                                            {isDirty ? <ClearIcon/> : <SearchIcon/>}
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
+                                value={value}
+                                onChange={onChange}
+                            />
+                        )}
                     />
-                </FormControl>
+                </form>
                 <Button
                     sx={{height: '40px'}}
                     variant='contained'

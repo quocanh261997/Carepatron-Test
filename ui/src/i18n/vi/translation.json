@@ -22,7 +22,11 @@
       "phoneNumber": "Số điện thoại",
       "back": "Trở lại",
       "continue": "Tiếp tục",
-      "create": "Thêm khách hàng"
+      "create": "Thêm khách hàng",
+      "firstNameError": "Họ không hợp lệ",
+      "lastNameError": "Tên không hợp lệ",
+      "emailError": "Email không hợp lệ",
+      "phoneNumberError": "Số điện thoại cần có 10 chữ số"
     },
     "updateModal": {
       "title": "Cập nhật thông tin khách hàng",
