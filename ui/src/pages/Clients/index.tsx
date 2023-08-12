@@ -78,6 +78,7 @@ function Clients() {
                                     '& .MuiOutlinedInput-notchedOutline': {
                                         borderWidth: '0.5px',
                                     },
+                                    width:"100%"
                                 }}
                                 id='outlined-adornment-password'
                                 placeholder={t('clients.searchPlaceholder')}
